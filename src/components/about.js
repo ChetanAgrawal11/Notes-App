@@ -4,10 +4,10 @@ import context from "../Context/notes/NoteContext";
 import { useEffect } from "react";
 
 export const About = () => {
-  const val = useContext(context);
-  useEffect(() => {
-    val.update();
-  }, []);
+  // const val = useContext(context);
+  // useEffect(() => {
+  //   val.update();
+  // }, []);
 
-  return <div>Hello these is {val.state.name}</div>;
+  return <div>Hello these is About</div>;
 };

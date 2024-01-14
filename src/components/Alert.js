@@ -3,8 +3,9 @@ import React from "react";
 const Alert = (props) => {
   return (
     <div>
-      <div className="alert alert-primary" role="alert">
-        {props.mess}
+      <div className={`alert alert-${props.alert.type}`} role="alert">
+        {props.alert.mess}
+        {/* heelo */}
       </div>
     </div>
   );

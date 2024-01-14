@@ -10,13 +10,14 @@ const JWT_Secret = "Heellotheseisthecreationjwtsecret";
 
 // Register the user
 router.post(
-  "/",
+  "/createUser",
   [
     body("name", "Wrong name").isLength({ min: 5 }),
     body("email").isEmail(),
     body("password", "Password must be of length 5 ").isLength({ min: 3 }),
   ],
   async (req, res) => {
+    let success = false;
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.send({ errors: result.array() });
@@ -31,7 +32,9 @@ router.post(
       // Checking if any user with the same email already exist or not
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json({ error: "Email already present " });
+        return res
+          .status(400)
+          .json({ success, error: "Email already present " });
       }
 
       user = await User.create({
@@ -45,13 +48,14 @@ router.post(
           id: user.id,
         },
       };
+      success = true;
       // const jwt_token = jwt.sign(user.id, JWT_Secret);
       const jwt_token = jwt.sign(data, JWT_Secret);
-      res.json({ jwt_token });
+      res.json({ success, jwt_token });
       // res.send(user);
     } catch (error) {
       //  These is the just the checking of the error we can also remove the catch block no issue with it
-      res.status(500).json("Some error has been occured");
+      res.status(500).json(success, "Some error has been occured");
       console.log(error.message);
     }
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import { useHistory } from "react";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
+const Login = (props) => {
   let history = useNavigate();
   const [cred, setcred] = useState({ email: "", password: "" });
   const handleSubmit = async (e) => {
@@ -19,10 +19,11 @@ const Login = () => {
     const json = await response.json(); // parses JSON response into native JavaScript objects
     console.log(json);
     if (json.ans === true) {
-      localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("token", json.jwt_token);
+      props.alertfun("Successfully logged In", "primary");
       history("/");
     } else {
-      alert("Invalid cred");
+      props.alertfun("Invalid Credential", "danger");
     }
   };
   const onChange = (e) => {

@@ -7,20 +7,36 @@ import { About } from "./components/about";
 import { Home } from "./components/home";
 import { Navbar } from "./components/navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import { useState } from "react";
 function App() {
+  const [alert, setalert] = useState({ message: " ", type: "" });
+  const alertfun = (message, type) => {
+    setalert({ mess: message, type: type });
+    setTimeout(() => {
+      setalert({ message: " ", type: "" });
+    }, 2000);
+  };
+
   return (
     <>
       <NoteState>
         <Router>
           <Navbar />
-          <Alert mess="from here i can pass mess" />
+          <Alert alert={alert} />
           <div className="container">
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/" element={<Home alertfun={alertfun} />} />
               <Route exact path="/about" element={<About />} />
-              <Route exact path="/Login" element={<Login />} />
-              <Route exact path="/SignUp" element={<SignUp />} />
+              <Route
+                exact
+                path="/Login"
+                element={<Login alertfun={alertfun} />}
+              />
+              <Route
+                exact
+                path="/SignUp"
+                element={<SignUp alertfun={alertfun} />}
+              />
             </Routes>
           </div>
         </Router>
