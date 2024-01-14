@@ -14,7 +14,7 @@ const fetchUser = (req, res, next) => {
     req.user = data.user;
     next();
   } catch (error) {
-    res.status(401).json({ message: "Unauthorized - Missing token" });
+    res.status(401).json({ message: "Unauthorizedfe s - Missing token" });
   }
 };
 module.exports = fetchUser;

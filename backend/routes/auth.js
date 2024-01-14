@@ -69,6 +69,7 @@ router.post(
     body("password", "Password must have some length").exists(),
   ],
   async (req, res) => {
+    let ans = false;
     // // Validation checking upar k condition check ho rhi h
     // Checking the email already present in the array or not
     const result = validationResult(req);
@@ -97,8 +98,9 @@ router.post(
           id: user.id,
         },
       };
+      ans = true;
       const jwt_token = jwt.sign(data, JWT_Secret);
-      res.json({ jwt_token });
+      res.json({ ans, jwt_token });
     } catch (error) {
       //  These is the just the checking of the error we can also remove the catch block no issue with it
       res.status(500).json("Some error has been occured");
